@@ -33,18 +33,21 @@ bioawk -c fastx '$name ~ /PRD/ {print ">"$name"\n"$seq}' data/HomeoDB2_renamed.f
 Now, obtain the phylogenies:
 
 ```
-scripts/get_phy.sh tmp/PRD.fa &> output/PRD.log
-scripts/get_phy.sh tmp/ANTP.fa &> output/PRD.log
+for PREF in (ANTP PRD); do
+echo $PREF
+scripts/get_phy.sh tmp/${PREF}.fa &> output/${PREF}.log
+done
 ```
 
 ## Orthogroup calling  
 
 Once the trees are ready, we can call the orthogroups using possum:
+
 ```
-PREF=ANTP
+for PREF in (ANTP PRD); do
+echo $PREF
 python scripts/possvm-orthology/possvm.py -s 0 -i output/${PREF}_phy.treefile  --skipprint -refsps Human -itermidroot 10 -min_support_transfer 10 --cut_gene_names 100 -ogprefix OG -p ${PREF}
-PREF=PRD
-python scripts/possvm-orthology/possvm.py -s 0 -i output/${PREF}_phy.treefile  --skipprint -refsps Human -itermidroot 10 -min_support_transfer 10 --cut_gene_names 100 -ogprefix OG -p ${PREF}
+done
 ```
 This will create the files in `output` directory with OGs and transferred annotations.  
 
