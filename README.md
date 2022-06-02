@@ -26,6 +26,8 @@ bioawk -c fastx '$name ~ /PRD/ {print ">"$name"\n"$seq}' data/HomeoDB2.fa > tmp/
 ```
 ## Phylogenies 
 
+Now, obtain the phylogenies:
+
 ```
 ./get_phy.sh tmp/PRD.fa
 ./get_phy.sh tmp/ANTP.fa
