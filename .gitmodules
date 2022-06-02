@@ -1,0 +1,3 @@
+[submodule "scripts/possvm-orthology"]
+	path = scripts/possvm-orthology
+	url = https://github.com/xgrau/possvm-orthology.git
