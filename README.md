@@ -5,6 +5,8 @@ __TODOs__:
 * Compare obtained family classifications with what's "known" for human genes using adjusted Rand index  
     * what's now is deduced from gene classification in HomeoDB2
 * these results will be later used to compare "the best case" performance with classification from TF evolution pipeline
+* an additional analysis would be using GeneRax to potentially improve the classification. 
+
 
 
 ## Prepare the data  
@@ -54,4 +56,6 @@ This will create the files in `output` directory with OGs and transferred annota
 ## Orthogroup classification   
 
 Classify the orthogroups w.r.t. to the known families.  
+
+**TODO** implement jaccard index / Rmd with comparison. 
 
