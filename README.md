@@ -24,18 +24,21 @@ Get gene-to-family and class classfication:
 grep '>'  data/HomeoDB2_renamed.fa  | sed -E 's/\|/\t/g' | sed 's/>//g' > data/HomeoDB2_classification.tab
 ```
 
-Get ANTP and PRD classes:
+Get classes for the alignment:
 ```
 mkdir -p tmp
-bioawk -c fastx '$name ~ /ANTP/ {print ">"$name"\n"$seq}' data/HomeoDB2_renamed.fa > tmp/ANTP.fa
-bioawk -c fastx '$name ~ /PRD/ {print ">"$name"\n"$seq}' data/HomeoDB2_renamed.fa > tmp/PRD.fa
+CLASSES=(ANTP PRD TALE POU)
+for PREF in ${CLASSES[@]};do 
+echo $PREF
+bioawk -c fastx -v PREF="$PREF" '$name ~ PREF {print ">"$name"\n"$seq}' data/HomeoDB2_renamed.fa | sed 's/:/_/g' > tmp/${PREF}.fa
+done
 ```
 ## Phylogenies 
 
 Now, obtain the phylogenies:
 
 ```
-for PREF in (ANTP PRD); do
+for PREF in ${CLASSES[@]}; do
 echo $PREF
 scripts/get_phy.sh tmp/${PREF}.fa &> output/${PREF}.log
 done
@@ -46,7 +49,8 @@ done
 Once the trees are ready, we can call the orthogroups using possum:
 
 ```
-for PREF in (ANTP PRD); do
+PREFS=( ANTP PRD )
+for PREF in ${PREFS[@]}; do
 echo $PREF
 python scripts/possvm-orthology/possvm.py -s 0 -i output/${PREF}_phy.treefile  --skipprint -refsps Human -itermidroot 10 -min_support_transfer 10 --cut_gene_names 100 -ogprefix OG -p ${PREF}
 done
@@ -59,3 +63,10 @@ Classify the orthogroups w.r.t. to the known families.
 
 **TODO** implement jaccard index / Rmd with comparison. 
 
+## Optimize tree topology using GeneRax
+
+* for this species tree should be present - `data/sps_tree.newick`
+
+```
+mpiexec -np 4 generax -s data/sps_tree.newick -f famfile --per-family-rates --strategy SPR -p generax_out
+```

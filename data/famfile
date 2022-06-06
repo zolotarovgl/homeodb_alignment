@@ -1,0 +1,9 @@
+[FAMILIES]
+- PRD
+starting_gene_tree=output/PRD_phy.treefile
+alignment=tmp/PRD.lt.fa
+subst_model=Blosum62
+- ANTP
+starting_gene_tree=output/ANTP_phy.treefile
+alignment=tmp/ANTP.lt.fa
+subst_model=Blosum62
