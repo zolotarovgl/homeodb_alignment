@@ -49,8 +49,7 @@ done
 Once the trees are ready, we can call the orthogroups using possum:
 
 ```
-PREFS=( ANTP PRD )
-for PREF in ${PREFS[@]}; do
+for PREF in ${CLASSES[@]}; do
 echo $PREF
 python scripts/possvm-orthology/possvm.py -s 0 -i output/${PREF}_phy.treefile  --skipprint -refsps Human -itermidroot 10 -min_support_transfer 10 --cut_gene_names 100 -ogprefix OG -p ${PREF}
 done
@@ -68,5 +67,5 @@ Classify the orthogroups w.r.t. to the known families.
 * for this species tree should be present - `data/sps_tree.newick`
 
 ```
-mpiexec -np 4 generax -s data/sps_tree.newick -f famfile --per-family-rates --strategy SPR -p generax_out
+mpiexec -np 8 generax -s data/sps_tree.newick -f data/generax_famfile --per-family-rates --strategy SPR -p generax_out
 ```

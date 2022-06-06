@@ -1,0 +1,17 @@
+[FAMILIES]
+- PRD
+starting_gene_tree=output/PRD_phy.treefile
+alignment=tmp/PRD.lt.fa
+subst_model=Blosum62
+- ANTP
+starting_gene_tree=output/ANTP_phy.treefile
+alignment=tmp/ANTP.lt.fa
+subst_model=Blosum62
+- POU
+starting_gene_tree=output/POU_phy.treefile
+alignment=tmp/POU.lt.fa
+subst_model=Blosum62
+- TALE
+starting_gene_tree=output/TALE_phy.treefile
+alignment=tmp/TALE.lt.fa
+subst_model=Blosum62
